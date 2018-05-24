@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<helpItems schema="maml" xmlns="http://msh">
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-ClipboardText</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>ClipboardText</command:noun>
+      <maml:description>
+        <maml:para>Gets text from the clipboard.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Retrieves text from the system clipboard as an arry of lines (by default) or as-is (with -Raw).</maml:para>
+      <maml:para>If the clipboard is empty or contains no text, $null is returned.</maml:para>
+      <maml:para>LINUX CAVEAT: The xclip utility must be installed; on Debian-based platforms               such as Ubuntu, install it with: sudo apt install xclip</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-ClipboardText</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Raw</maml:name>
+          <maml:Description>
+            <maml:para>Output the retrieved text as-is, even if it spans multiple lines. By default, if the retrieved text is a multi-line string, each line is  output individually.</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Raw</maml:name>
+        <maml:Description>
+          <maml:para>Output the retrieved text as-is, even if it spans multiple lines. By default, if the retrieved text is a multi-line string, each line is  output individually.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>This function is a "polyfill" to make up for the lack of built-in clipboard support in Windows Powershell v5.0- and in PowerShell Core as of v6.1,  albeit only with respect to text. In Windows PowerShell v5.1+, you can use the built-in Get-Clipboard cmdlet instead (which this function invokes, if available).</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-ClipboardText | ForEach-Object { $i=0 } { '#{0}: {1}' -f (++$i), $_ }</dev:code>
+        <dev:remarks>
+          <maml:para>Retrieves text from the clipboard and sends its lines individually through the pipeline, using a ForEach-Object command to prefix each line with its line number.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>out.txt</dev:code>
+        <dev:remarks>
+          <maml:para>Retrieves text from the clipboard as-is and saves it to file out.txt (with a newline appended).</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Set-ClipboardText</command:name>
+      <command:verb>Set</command:verb>
+      <command:noun>ClipboardText</command:noun>
+      <maml:description>
+        <maml:para>Copies text to the clipboard.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Copies a text representation of the input to the system clipboard.</maml:para>
+      <maml:para>Input can be provided via the pipeline or via the -InputObject parameter.</maml:para>
+      <maml:para>If you provide no input, the empty string, or $null, the clipboard is effectively cleared.</maml:para>
+      <maml:para>Non-text input is formatted the same way as it would print to the console, which means that the console/terminal window's [buffer] width determines the output line width, which may result in truncated data (indicated with "..."). To avoid that, you can increase the max. line width with -Width, but see  the caveats in the parameter description.</maml:para>
+      <maml:para>LINUX CAVEAT: The xclip utility must be installed; on Debian-based platforms                 such as Ubuntu, install it with: sudo apt install xclip</maml:para>
+      <maml:para>WINDOWS CAVEAT: In MTA mode, passing an empty string is not supported;                  a newline will be copied instead, and a warning issued.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Set-ClipboardText</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
+          <maml:name>InputObject</maml:name>
+          <maml:Description>
+            <maml:para>Note: The built-in PsWinV5.0+ Set-Clipboard cmdlet does NOT have mandatory input, in which case the clipbard is effectively cleared . Note: The built-in PsWinV5.0+ Set-Clipboard cmdlet allows $null too.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+          <dev:type>
+            <maml:name>Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Width</maml:name>
+          <maml:Description>
+            <maml:para>For non-text input, determines the maximum output-line length. The default is Out-String's default, which is the current console/terminal window's [buffer] width.</maml:para>
+            <maml:para>Be careful with high values and avoid [int]::MaxValue, however, because in the case of (implicit) Format-Table output each output line is padded to  that very width, which can require a lot of memory.</maml:para>
+          </maml:Description>
+          <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+          <dev:type>
+            <maml:name>Int32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>0</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>PassThru</maml:name>
+          <maml:Description>
+            <maml:para>In addition to copying the resulting string representation of the input to the clipboard, also outputs it, as single string.</maml:para>
+          </maml:Description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
+        <maml:name>InputObject</maml:name>
+        <maml:Description>
+          <maml:para>Note: The built-in PsWinV5.0+ Set-Clipboard cmdlet does NOT have mandatory input, in which case the clipbard is effectively cleared . Note: The built-in PsWinV5.0+ Set-Clipboard cmdlet allows $null too.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Object</command:parameterValue>
+        <dev:type>
+          <maml:name>Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Width</maml:name>
+        <maml:Description>
+          <maml:para>For non-text input, determines the maximum output-line length. The default is Out-String's default, which is the current console/terminal window's [buffer] width.</maml:para>
+          <maml:para>Be careful with high values and avoid [int]::MaxValue, however, because in the case of (implicit) Format-Table output each output line is padded to  that very width, which can require a lot of memory.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="true" variableLength="false">Int32</command:parameterValue>
+        <dev:type>
+          <maml:name>Int32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>0</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>PassThru</maml:name>
+        <maml:Description>
+          <maml:para>In addition to copying the resulting string representation of the input to the clipboard, also outputs it, as single string.</maml:para>
+        </maml:Description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes />
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>This function is a "polyfill" to make up for the lack of built-in clipboard support in Windows Powershell v5.0- and in PowerShell Core as of v6.1, albeit only with respect to text. In Windows PowerShell v5.1+, you can use the built-in Set-Clipboard cmdlet instead (which this function invokes, if available).</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Set-ClipboardText "Text to copy"</dev:code>
+        <dev:remarks>
+          <maml:para>Copies the specified text to the clipboard.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+        <dev:code>Get-ChildItem -File -Name | Set-ClipboardText</dev:code>
+        <dev:remarks>
+          <maml:para>Copies the names of all files the current directory to the clipboard.</maml:para>
+        </dev:remarks>
+      </command:example>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+        <dev:code>Get-ChildItem | Set-ClipboardText -Width 500</dev:code>
+        <dev:remarks>
+          <maml:para>Copies the text representations of the output from Get-ChildItem to the clipboard, ensuring that output lines are 500 characters wide.</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+</helpItems>
