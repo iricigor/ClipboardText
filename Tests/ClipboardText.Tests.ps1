@@ -20,7 +20,7 @@ if (-not $PSScriptRoot) { $PSScriptRoot = $MyInvocation.MyCommand.Path }
 
 # Make sure that the enclosing module is (re)loaded.
 # !! In PSv2, this statement causes Pester to run all tests TWICE (?!)
-Import-Module (Join-Path $PSScriptRoot '..') -Force
+Import-Module (Resolve-Path (Join-Path $PSScriptRoot '..')).Path -Force
 
 # Use the platform-appropiate newline.
 $nl = [Environment]::NewLine
