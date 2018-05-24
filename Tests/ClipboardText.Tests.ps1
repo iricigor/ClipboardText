@@ -28,8 +28,8 @@ $nl = [Environment]::NewLine
 Describe StringInputTest {
   It "Copies and pastes a string correctly." {
     $string = "Here at $(Get-Date)"
-    Set-ClipboardText $string
-    Get-ClipboardText | Should -BeExactly $string
+    Set-ClipboardText $string -Verbose
+    Get-ClipboardText -Verbose | Should -BeExactly $string
   }
   It "Correctly round-trips non-ASCII characters." {
     $string = 'Thomas Hübl''s talk about 中文'
