@@ -6,44 +6,6 @@ Set-Alias gcbt Get-ClipboardText
 
 
 function Get-ClipboardText {
-    <#
-    .SYNOPSIS
-    Gets text from the clipboard.
-    
-    .DESCRIPTION
-    Retrieves text from the system clipboard as an arry of lines (by default)
-    or as-is (with -Raw).
-    
-    If the clipboard is empty or contains no text, $null is returned.
-    
-    LINUX CAVEAT: The xclip utility must be installed; on Debian-based platforms
-                  such as Ubuntu, install it with: sudo apt install xclip
-    
-    .PARAMETER Raw
-    Output the retrieved text as-is, even if it spans multiple lines.
-    By default, if the retrieved text is a multi-line string, each line is 
-    output individually.
-    
-    .NOTES
-    This function is a "polyfill" to make up for the lack of built-in clipboard
-    support in Windows Powershell v5.0- and in PowerShell Core as of v6.1, 
-    albeit only with respect to text.
-    In Windows PowerShell v5.1+, you can use the built-in Get-Clipboard cmdlet
-    instead (which this function invokes, if available).
-    
-    .EXAMPLE
-    Get-ClipboardText | ForEach-Object { $i=0 } { '#{0}: {1}' -f (++$i), $_ }
-    
-    Retrieves text from the clipboard and sends its lines individually through
-    the pipeline, using a ForEach-Object command to prefix each line with its
-    line number.
-    
-    .EXAMPLE
-    Get-ClipboardText -Raw > out.txt
-    
-    Retrieves text from the clipboard as-is and saves it to file out.txt
-    (with a newline appended).
-    #>
       
     [CmdletBinding()]
     [OutputType([string])]

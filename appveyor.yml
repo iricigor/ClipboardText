@@ -7,11 +7,9 @@ image:
 
 install:
   - ps: Install-Module Pester -Force -SkipPublisherCheck -Scope CurrentUser
+  - ps: if ($IsLinux) {sudo apt-get install xclip}
 
 build: false
-
-before_test:
-  - ps: Import-Module .\ClipboardText.psd1 -Force
 
 # Invoke Pester to run all of the unit tests, then save the results into XML in order to populate the AppVeyor tests section
 test_script:
